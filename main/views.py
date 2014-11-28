@@ -7,5 +7,5 @@ from main.models import Post
 
 class Posts(View):
     def get(self, request):
-        posts = Post.objects.all().order_by('-when')
+        posts = Post.objects.filter(publish=True).order_by('-when')
         return HttpResponse(render(request, 'posts.html', {'posts': posts}))
