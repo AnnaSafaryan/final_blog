@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from main.views import Posts
+from main.views import Posts, Login
 
 
 urlpatterns = patterns('',
@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/?', include(admin.site.urls)),
-    url(r'^', Posts.as_view()),
+    url(r'^login/?', Login.as_view()),
+    url(r'^$', Posts.as_view()),
 )

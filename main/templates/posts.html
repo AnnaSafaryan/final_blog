@@ -5,6 +5,19 @@
     <title></title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <h1>Hello, {{ user.username }}</h1>
+    {% else %}
+    <h1>Please log in</h1>
+
+    <form action="/login" method="post">
+        {% csrf_token %}
+        <input type="text" name="username">
+        <input type="password" name="password"/>
+        <input type="submit"/>
+    </form>
+    
+    {% endif %}
     {% for post in posts %}
         <h1 style="color:#ff00ff">{{ post.header }}</h1>
         <h5>{{ post.when }}</h5>
