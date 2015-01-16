@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseRedirect
 from main.models import Post
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
@@ -22,3 +22,9 @@ class Login(View):
             return HttpResponseRedirect('/')
         else:
             return HttpResponse('No such login/password')
+
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponse('You succesfully logged out')
