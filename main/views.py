@@ -27,4 +27,4 @@ class Login(View):
 class Logout(View):
     def get(self, request):
         logout(request)
-        return HttpResponse('You succesfully logged out')
+        return HttpResponseRedirect('/')

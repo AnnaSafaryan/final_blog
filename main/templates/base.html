@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="{% static 'bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet">
+</head>
+
+<body>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                {% if user.is_authenticated %}
+                    <h1>Hello, {{ user.username }}</h1>
+                    <div style="text-align: right;">
+                        <a href="/logout">Logout</a>
+                    </div>
+                {% else %}
+                    <h1>Please log in</h1>
+                    <form action="/login" method="post" role="form" class="form-inline">
+                        {% csrf_token %}
+                        <div class="form-group">
+
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password"/>
+                        </div>
+                        <button type="submit" class="btn btn-default">Log In</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock content %}
+    <script src="{% static 'jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
