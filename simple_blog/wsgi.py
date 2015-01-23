@@ -12,7 +12,10 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.heroku")
 
 from django.core.wsgi import get_wsgi_application
 from dj_static import Cling
-from whitenoise.django import DjangoWhiteNoise
+
 
 application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+
+if os.environ['DJANGO_SETTINGS_MODULE'] == 'settings.heroku':
+    from whitenoise.django import DjangoWhiteNoise
+    application = DjangoWhiteNoise(application)
