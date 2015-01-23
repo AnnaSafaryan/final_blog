@@ -28,3 +28,41 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect('/')
+
+
+class AddPost(View):
+    def get(self, request):
+        if request.user.is_authenticated():
+            return HttpResponse(render(request, 'edit_post.html', {}))
+        else:
+            return HttpResponseRedirect('/')
+
+    def post(self, request):
+        header = request.POST['header']
+        content = request.POST['content']
+        publish = 'publish' in request.POST
+        Post.objects.create(header=header, text=content, publish=publish)
+        return HttpResponseRedirect('/')
+
+
+class SinglePost(View):
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        return HttpResponse(render(request, 'single_post.html', {'post': post}))
+
+
+class EditPost(View):
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        return HttpResponse(render(request, 'edit_post.html', {'post': post}))
+
+    def post(self, request, id):
+        post = Post.objects.get(id=id)
+        header = request.POST['header']
+        content = request.POST['content']
+        publish = 'publish' in request.POST
+        post.header = header
+        post.text = content
+        post.publish = publish
+        post.save()
+        return HttpResponseRedirect('/posts/{}/'.format(id))

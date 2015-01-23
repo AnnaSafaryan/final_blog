@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from main.views import Posts, Login, Logout
+from main.views import Posts, Login, Logout, AddPost, SinglePost, EditPost
 
 
 urlpatterns = patterns('',
@@ -11,5 +11,8 @@ urlpatterns = patterns('',
     url(r'^admin/?', include(admin.site.urls)),
     url(r'^login/?', Login.as_view()),
     url(r'^logout/?', Logout.as_view()),
+    url(r'^addpost/?', AddPost.as_view()),
+    url(r'^posts/(\d+)/edit/?', EditPost.as_view()),
+    url(r'^posts/(\d+)/?', SinglePost.as_view()),
     url(r'^$', Posts.as_view()),
 )
