@@ -3,7 +3,7 @@
     <section class="container">
         <div class="jumbotron">
         {% for post in posts %}
-            <a href="/posts/{{ post.id }}/"><h1 style="color:#ff00ff">{{ post.header }}</h1></a>
+            <a href="/posts/{{ post.id }}/"><h1>{{ post.header }}</h1></a>
             <h5>{{ post.when }}</h5>
             <p>{{ post.text|safe }}</p>
         {% endfor %}
