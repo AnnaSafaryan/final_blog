@@ -5,7 +5,13 @@
             <form role="form" method="post">
                 {% csrf_token %}
                 <input type="text" class="form-control" name="header" value="{{ post.header }}"/>
-                <textarea name="content" id="" cols="30" rows="10" class="form-control">{{ post.text }}</textarea>
+                <textarea name="content" id="post_editor" cols="30" rows="10" class="form-control">{{ post.text }}</textarea>
+
+                <script>
+                    // Replace textarea with id="post_editor" with CKEditor instance
+                    CKEDITOR.replace('post_editor');
+                </script>
+
                 <div class="checkbox">
                     <label><input type="checkbox" name="publish" {% if post.publish %}checked{% endif %}/>Publish?</label>
 
