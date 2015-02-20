@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse, HttpResponseRedirect
-from main.models import Post
+from main.models import Post, Comment
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
@@ -48,7 +48,8 @@ class AddPost(View):
 class SinglePost(View):
     def get(self, request, id):
         post = Post.objects.get(id=id)
-        return HttpResponse(render(request, 'single_post.html', {'post': post}))
+        comments = Comment.objects.all().filter(post=post)
+        return HttpResponse(render(request, 'single_post.html', {'post': post, 'comments': comments}))
 
 
 class EditPost(View):
@@ -65,4 +66,13 @@ class EditPost(View):
         post.text = content
         post.publish = publish
         post.save()
+        return HttpResponseRedirect('/posts/{}/'.format(id))
+
+
+class AddComment(View):
+    def post(self, request, id):
+        post = Post.objects.get(id=id)
+        header = request.POST['header']
+        text = request.POST['text']
+        Comment.objects.create(post=post, header=header, text=text)
         return HttpResponseRedirect('/posts/{}/'.format(id))

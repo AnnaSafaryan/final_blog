@@ -2,10 +2,12 @@
 {% block content %}
     <section class="container">
         <div class="jumbotron">
+        <h1>Posts({{ posts.count }})</h1>
         {% for post in posts %}
-            <a href="/posts/{{ post.id }}/"><h1>{{ post.header }}</h1></a>
+            <a href="/posts/{{ post.id }}/"><h2>{{ post.header }}</h2></a>
             <h5>{{ post.when }}</h5>
             <p>{{ post.text|safe }}</p>
+            <h5>{{ post.comment_set.count }} Comments</h5>
         {% endfor %}
         </div>
     </section>
