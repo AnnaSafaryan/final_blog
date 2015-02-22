@@ -2,12 +2,25 @@
 {% block content %}
     <section class="container">
         <div class="jumbotron">
-        <h1>Posts({{ posts.count }})</h1>
+            <h1><b>Posts ({{ posts.count }})</b></h1>
+            <div style="text-align: right;">
+                    <a href="/addpost"><h5><i>Add post</i></h5></a>
+                </div>
         {% for post in posts %}
-            <a href="/posts/{{ post.id }}/"><h2>{{ post.header }}</h2></a>
-            <h5>{{ post.when }}</h5>
-            <p>{{ post.text|safe }}</p>
-            <h5>{{ post.comment_set.count }} Comments</h5>
+        <hr/>
+            <div class="row">
+                <div class="md-col-2 text-right">
+                    <a href="/posts/{{ post.id }}/"><i>Comments ({{ post.comment_set.count }})</i></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/posts/{{ post.id }}/"><h1>{{ post.header }}</h1></a>
+                </div>
+            </div>
+            <h5><i>{{ post.when }}</i></h5>
+                <p>{{ post.text|safe }}</p>
+            
         {% endfor %}
         </div>
     </section>

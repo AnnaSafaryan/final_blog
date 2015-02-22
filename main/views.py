@@ -21,7 +21,7 @@ class Login(View):
             login(request, user)
             return HttpResponseRedirect('/')
         else:
-            return HttpResponse('No such login/password')
+            return HttpResponse(render(request, 'error.html'))
 
 
 class Logout(View):
@@ -48,7 +48,7 @@ class AddPost(View):
 class SinglePost(View):
     def get(self, request, id):
         post = Post.objects.get(id=id)
-        comments = Comment.objects.all().filter(post=post)
+        comments = Comment.objects.all().filter(post=post).order_by('when')
         return HttpResponse(render(request, 'single_post.html', {'post': post, 'comments': comments}))
 
 
@@ -76,3 +76,13 @@ class AddComment(View):
         text = request.POST['text']
         Comment.objects.create(post=post, header=header, text=text)
         return HttpResponseRedirect('/posts/{}/'.format(id))
+
+
+class About(View):
+    def get(self, request):
+        return HttpResponse(render(request, 'about.html', {}))
+
+
+class Contacts(View):
+    def get(self, request):
+        return HttpResponse(render(request, 'contacts.html', {}))

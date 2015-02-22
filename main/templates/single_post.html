@@ -2,28 +2,37 @@
 {%  block content %}
     <section class="container">
         <div class="jumbotron">
-            <font size="6">{{ post.header }}</font>
-            <h5>{{ post.when }}</h5>
+            <font size="6"><b>{{ post.header }}</b></font>
+            <i><h5>{{ post.when }}</h5></i>
             {% if user.is_authenticated %}
                 <div style="text-align: right;">
-                    <a href="/posts/{{ post.id}}/edit/"><h5>Edit post</h5></a>
+                    <a href="/posts/{{ post.id}}/edit/"><i><h5>Edit post</h5></i></a>
                 </div>
             {% endif %}
-            <p><font size="6">{{ post.text|safe }}</font></p>
+            <p>{{ post.text|safe }}</p>
+            <hr/>
             
             {% if comments %}
-                <ul>
-                {% for comment in comments %}
-                    <li> <h5>{{ comment.when }}</h5>
-                        <p><font size="4">{{ comment.text|safe }}</font></p></li>
-                {% endfor %}
-                </ul>
+            <h4>Comments</h4>
+            <ul>
+            {% for comment in comments %}
+                <li style="list-style: disc;">
+                    <h7>{{ comment.when }}</h7>
+                    <p>{{ comment.text|safe }}</p>
+                </li>
+            {% endfor %}
+            </ul>
             {% endif %}
-           <form role="form" method="post" action="addcomment">
+            
+
+            <form role="form" action="/posts/{{ post.id}}/add_comment/" method="post">
                 {% csrf_token %}
-                <input type="text" class="form-control" name="header" value="{{ comments.header }}"/>
-                <textarea cols="30" rows="10" class="form-control" name="text"></textarea>
-                <button type="submit" class="btn btn-default">Add comment</button>
+                <ul>
+                <li style="list-style: none"><input type="text" class="form-control" name="header" value="{{ comments.header }}"/>
+                <textarea cols="30" rows="10" class="form-control"name="comment" id=""></textarea></li>
+                <li style="list-style: none"><button type="submit" class="btn btn-default">Add comment</button></li>
+                </ul>
             </form>
+        </div>
     </section>
 {%  endblock content %}
